@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Página no encontrada · TendiCloud" description="La página que buscas no existe." noindex>
+  <main class="nf">
+    <div class="wrap">
+      <a href="/" class="nf-logo" aria-label="TendiCloud, ir al inicio"><img src="/logo-dark.webp" alt="TendiCloud" width="567" height="116" /></a>
+      <span class="eyebrow">Error 404</span>
+      <h1 class="display">Esta página no<br /><span class="hl">está en el inventario.</span></h1>
+      <p>El enlace puede estar mal escrito o la página ya no existe.</p>
+      <a class="btn btn-primary btn-lg" href="/">Volver al inicio</a>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .nf { display: flex; align-items: center; min-height: 100vh; padding: 80px 0; }
+  .nf-logo { display: inline-block; margin-bottom: 56px; }
+  .nf-logo img { width: auto; height: 48px; }
+  h1 { margin-top: 20px; font-size: clamp(38px, 6vw, 80px); letter-spacing: -.045em; }
+  p { margin: 20px 0 32px; color: var(--ink-2); font-size: 18px; }
+</style>

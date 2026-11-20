@@ -1,11 +1,78 @@
 ---
 import '../styles/global.css';
+import { FAQS, PLANS, SEO, SITE } from '../config';
 
 interface Props {
   title: string;
   description: string;
+  noindex?: boolean;
+  jsonLd?: boolean;
 }
-const { title, description } = Astro.props;
+const { title, description, noindex = false, jsonLd = false } = Astro.props;
+const site = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL('/og-image.png', site).href;
+
+const ld = jsonLd && {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${site.href}#org`,
+      name: SITE.name,
+      url: site.href,
+      logo: new URL('/icon-512.png', site).href,
+      email: SITE.email,
+      areaServed: 'CO',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site.href}#web`,
+      name: SITE.name,
+      url: site.href,
+      inLanguage: 'es-CO',
+      publisher: { '@id': `${site.href}#org` },
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: SITE.name,
+      description: SEO.description,
+      url: site.href,
+      image: ogImage,
+      applicationCategory: 'BusinessApplication',
+      applicationSubCategory: 'Punto de venta (POS)',
+      operatingSystem: 'Web, Windows, macOS, Android, iOS',
+      inLanguage: 'es-CO',
+      publisher: { '@id': `${site.href}#org` },
+      offers: PLANS.filter((p) => p.monthly).map((p) => ({
+        '@type': 'Offer',
+        name: `Plan ${p.name}`,
+        price: p.monthly,
+        priceCurrency: 'COP',
+        description: p.blurb,
+        url: `${site.href}#precios`,
+      })),
+      featureList: [
+        'Punto de venta con lector de código de barras',
+        'Facturación electrónica DIAN',
+        'Caja con arqueo por turno y medio de pago',
+        'Inventario',
+        'Cartera y fiado',
+        'Compras y proveedores',
+        'Reportes de ventas',
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: FAQS.map(([q, a]) => ({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a },
+      })),
+    },
+  ],
+};
+const ldJson = ld ? JSON.stringify(ld).replace(/</g, '\\u003c') : '';
 ---
 <!doctype html>
 <html lang="es-CO">
@@ -14,12 +81,34 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={SEO.keywords.join(', ')} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
+    <meta name="author" content={SITE.name} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {SEO.googleVerification && <meta name="google-site-verification" content={SEO.googleVerification} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content={SEO.locale} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/logo-dark.png" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="TendiCloud, el POS en la nube para tiendas de barrio" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <meta name="theme-color" content="#050a14" />
-    <link rel="icon" type="image/png" href="/logo-mark.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    {ldJson && <script type="application/ld+json" set:html={ldJson} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

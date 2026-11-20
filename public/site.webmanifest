@@ -1,0 +1,15 @@
+{
+  "name": "TendiCloud",
+  "short_name": "TendiCloud",
+  "description": "Gestión integral para tenderos: POS, caja, inventario, fiado y factura electrónica DIAN.",
+  "lang": "es-CO",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050a14",
+  "theme_color": "#050a14",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

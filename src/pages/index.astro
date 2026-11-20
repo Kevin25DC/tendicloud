@@ -10,11 +10,9 @@ import Pricing from '../components/Pricing.astro';
 import Faq from '../components/Faq.astro';
 import FinalCta from '../components/FinalCta.astro';
 import Footer from '../components/Footer.astro';
+import { SEO } from '../config';
 ---
-<Base
-  title="TendiCloud · Gestión integral para tenderos"
-  description="POS en la nube para tiendas y minimercados en Colombia: ventas, caja con arqueo por turno, inventario, fiado, compras y factura electrónica DIAN."
->
+<Base title={SEO.title} description={SEO.description} jsonLd>
   <Nav />
   <main>
     <Hero />

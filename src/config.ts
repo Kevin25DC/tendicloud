@@ -46,6 +46,31 @@ export const PLANS: Plan[] = [
   },
 ];
 
+export const SEO = {
+  title: 'TendiCloud | Software POS para tiendas de barrio con factura electrónica DIAN',
+  description:
+    'Programa POS en la nube para tiendas de barrio, minimercados y droguerías en Colombia: ventas con lector de código de barras, caja con arqueo, inventario, fiado y facturación electrónica DIAN. Prueba gratis.',
+  keywords: [
+    'software POS', 'POS para tiendas', 'programa para tienda de barrio', 'sistema POS Colombia',
+    'punto de venta en la nube', 'facturación electrónica DIAN', 'software para minimercados',
+    'control de inventario', 'cuaderno del fiado', 'arqueo de caja', 'software para droguerías',
+  ],
+  locale: 'es_CO',
+  // Código de verificación de Google Search Console (meta "google-site-verification"); vacío = no se publica.
+  googleVerification: import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION ?? '',
+};
+
+export const FAQS: [string, string][] = [
+  ['¿Qué es TendiCloud?', 'TendiCloud es un software POS en la nube para tiendas de barrio, minimercados y negocios de mostrador en Colombia. Reúne en un solo lugar el punto de venta, la caja con arqueo, el inventario, el fiado, las compras a proveedores y la facturación electrónica DIAN.'],
+  ['¿Tengo que instalar algo?', 'No. TendiCloud funciona desde el navegador del computador, la tablet o el celular. Solo necesitas conexión a internet; la impresora y el lector se conectan por USB al equipo donde vendes.'],
+  ['¿Sirve para la facturación electrónica de la DIAN?', 'Sí. La factura electrónica sale desde el mismo POS, con su CUFE y su código QR. Para activarla necesitas tu RUT y una resolución de facturación vigente; te acompañamos en la configuración.'],
+  ['¿Qué impresora necesito?', 'Cualquier impresora térmica de 58 u 80 mm compatible con ESC/POS conectada por USB. Si ya tienes una en el mostrador, lo más probable es que funcione.'],
+  ['¿Puedo manejar el fiado?', 'Sí. El módulo de cartera guarda cuánto debe cada cliente y desde cuándo, y recibe abonos parciales. Se acabaron las hojas sueltas del cuaderno.'],
+  ['¿Puedo tener varias cajas vendiendo al tiempo?', 'Sí. Cada caja abre y cierra su propio turno, con su arqueo por medio de pago. El administrador ve todas las cajas y el historial de turnos.'],
+  ['¿Para qué negocios sirve?', 'Para cualquier negocio con mostrador y caja: tiendas de barrio, minimercados, graneros, droguerías, panaderías, ferreterías, papelerías, licoreras, carnicerías y fruvers.'],
+  ['¿Qué pasa con mis datos si dejo de usarlo?', 'Son tuyos. Antes de cancelar puedes pedir la exportación de tus productos, clientes y ventas.'],
+];
+
 export const contactHref = SITE.whatsapp
   ? `https://wa.me/${SITE.whatsapp}`
   : `mailto:${SITE.email}`;
