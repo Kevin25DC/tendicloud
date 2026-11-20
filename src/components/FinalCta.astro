@@ -49,4 +49,10 @@ const arrow = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke
   .cta-box h2 { position: relative; max-width: 14ch; margin: 0 auto; font-size: clamp(38px, 6vw, 84px); letter-spacing: -.045em; }
   .cta-box p { position: relative; max-width: 52ch; margin: 24px auto 0; color: var(--ink-2); font-size: clamp(16px, 1.4vw, 19px); }
   .cta-actions { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px; }
+  @media (max-width: 520px) {
+    .cta-box { border-radius: 22px; }
+    .cta-mark { height: 52px; margin-bottom: 22px; }
+    .cta-actions { flex-direction: column; }
+    .cta-actions .btn { width: 100%; }
+  }
 </style>

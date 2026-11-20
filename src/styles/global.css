@@ -77,6 +77,11 @@ ul { list-style: none; }
   letter-spacing: -.035em;
 }
 .sec-lead { margin-top: 20px; max-width: 56ch; color: var(--ink-2); font-size: clamp(16px, 1.35vw, 18px); }
+@media (max-width: 640px) {
+  .sec { padding: 76px 0; }
+  .sec-title { margin-top: 14px; }
+  .btn-lg { --h: 52px; }
+}
 
 .btn {
   --h: 48px;

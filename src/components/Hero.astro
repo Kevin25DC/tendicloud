@@ -332,11 +332,17 @@ const arrow = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke
   .rc-thanks { margin-top: 4px; color: #55585f; }
 
   @media (max-width: 1080px) {
-    .pos { grid-template-columns: 1fr; }
+    .pos { grid-template-columns: minmax(0, 1fr); }
     .printer { display: none; }
   }
   @media (max-width: 720px) {
-    .pos-body { grid-template-columns: 1fr; }
+    .hero { padding-top: 108px; }
+    .hero-title { margin-top: 24px; }
+    .hero-row { margin-top: 28px; }
+    .pos-bar { gap: 10px; padding: 0 14px; }
+    .pos-left, .pos-right { padding: 14px; }
+    .pos-sum .row b { font-size: 22px; }
+    .pos-body { grid-template-columns: minmax(0, 1fr); }
     .pos-left { border-right: 0; border-bottom: 1px solid var(--line); }
     .pos-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .pos-tiles .tile:nth-child(n + 7) { display: none; }
@@ -344,6 +350,12 @@ const arrow = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke
     .pos-cart { min-height: 160px; }
     .pos-toast { left: 50%; font-size: 12px; }
     .hero-tilt { transform: none; }
+  }
+  @media (max-width: 520px) {
+    .hero-actions { flex-direction: column; }
+    .hero-actions .btn { width: 100%; }
+    .hero-pill { font-size: 12px; }
+    .pos-pay button { font-size: 10.5px; }
   }
 </style>
 

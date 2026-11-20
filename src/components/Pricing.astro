@@ -80,10 +80,19 @@ const yearly = (m: number) => Math.round((m * 10) / 12 / 100) * 100;
   .plan li::before { content: ''; flex-shrink: 0; width: 16px; height: 16px; margin-top: 3px; border-radius: 50%; background: rgba(61, 220, 151, .14) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%233ddc97' stroke-width='2.2'%3E%3Cpath d='M4.5 8.5l2.5 2.5 4.5-5'/%3E%3C/svg%3E") center/12px no-repeat; }
   .pr-foot { margin-top: 28px; color: var(--ink-3); font-size: 13px; }
 
+  @media (max-width: 1180px) {
+    .plan-flag { top: -12px; right: auto; left: 50%; transform: translateX(-50%); white-space: nowrap; background: #12305a; border: 1px solid rgba(79, 184, 245, .35); }
+  }
   @media (max-width: 960px) {
     .pr-head { grid-template-columns: 1fr; gap: 24px; }
-    .plans { grid-template-columns: 1fr; max-width: 520px; }
+    .plans { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
     .plan-blurb { min-height: 0; }
+  }
+  @media (max-width: 520px) {
+    .bill { display: grid; width: 100%; }
+    .bill button { padding: 0 10px; }
+    .plan { padding: 26px 20px; }
+    .plan-price b { font-size: 36px; }
   }
 </style>
 
