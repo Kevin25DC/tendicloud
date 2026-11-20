@@ -1,0 +1,567 @@
+---
+import { SITE } from '../config';
+
+const products = [
+  { sku: '7702001', name: 'Arroz 500 g', price: 2900, query: 'arr', cat: 'Granos' },
+  { sku: '7702412', name: 'Aceite 1 L', price: 11900, query: '7702412', cat: 'Granos' },
+  { sku: '7701503', name: 'Huevos AA x12', price: 9800, query: 'huev', cat: 'Lácteos' },
+  { sku: '7705120', name: 'Leche entera 1 L', price: 4300, query: 'lech', cat: 'Lácteos' },
+  { sku: '7703360', name: 'Pan tajado', price: 6200, query: 'pan t', cat: 'Panadería' },
+  { sku: '7702288', name: 'Café molido 250 g', price: 12500, query: '7702288', cat: 'Granos' },
+  { sku: '7709031', name: 'Panela 500 g', price: 3400, query: 'pane', cat: 'Granos' },
+  { sku: '7704415', name: 'Gaseosa 1,5 L', price: 5900, query: 'gase', cat: 'Bebidas' },
+  { sku: '7706672', name: 'Jabón en barra', price: 3100, query: 'jab', cat: 'Aseo' },
+];
+const fmt = (n: number) => n.toLocaleString('es-CO');
+const arrow = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+---
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-glow"></div>
+    <svg class="hero-chart" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="hc-line" x1="0" x2="1">
+          <stop offset="0" stop-color="#2f80e0" stop-opacity="0" />
+          <stop offset=".35" stop-color="#2f80e0" />
+          <stop offset="1" stop-color="#6fd6ff" />
+        </linearGradient>
+        <linearGradient id="hc-fill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#2f80e0" stop-opacity=".16" />
+          <stop offset="1" stop-color="#2f80e0" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <g class="gl">
+        {[150, 270, 390, 510, 630].map((y) => <line x1="0" x2="1440" y1={y} y2={y} />)}
+        {[240, 480, 720, 960, 1200].map((x) => <line x1={x} x2={x} y1="0" y2="760" />)}
+      </g>
+      <path class="hero-area" d="M0 660 L170 618 L310 640 L450 548 L590 584 L740 470 L870 506 L1020 380 L1150 408 L1300 250 L1440 196 L1440 760 L0 760Z" fill="url(#hc-fill)" />
+      <path class="hero-line" pathLength="1" d="M0 660 L170 618 L310 640 L450 548 L590 584 L740 470 L870 506 L1020 380 L1150 408 L1300 250 L1440 196" stroke="url(#hc-line)" stroke-width="2" fill="none" />
+      <circle class="hero-dot" cx="1300" cy="250" r="5" />
+    </svg>
+  </div>
+
+  <div class="wrap hero-copy">
+    <a class="hero-pill" href="#modulos" data-reveal>
+      <span class="tag">Nuevo</span>
+      Arqueo por turno con desglose por medio de pago
+      <Fragment set:html={arrow} />
+    </a>
+    <h1 class="hero-title display" data-split>
+      La caja cuadra.<br />El inventario cuadra.<br /><span class="hl">Tú descansas.</span>
+    </h1>
+    <div class="hero-row">
+      <p class="hero-lead" data-reveal style="--d:.45s">
+        <strong>TendiCloud</strong> es el sistema para tenderos: vendes en el POS, imprimes el tiquete, facturas ante la DIAN
+        y cierras la caja sin sacar la calculadora.
+      </p>
+      <div class="hero-side" data-reveal style="--d:.6s">
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href={SITE.signupUrl}>Probar {SITE.trialDays} días gratis <Fragment set:html={arrow} /></a>
+          <a class="btn btn-line btn-lg" href="#producto">Verlo funcionar</a>
+        </div>
+        <ul class="hero-facts mono">
+          <li>Sin instalar nada</li>
+          <li>PC, tablet o celular</li>
+          <li>Hecho en Colombia</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap hero-stage" id="producto" data-reveal style="--d:.3s">
+    <div class="hero-tilt" data-tilt>
+      <div class="pos" data-pos aria-hidden="true">
+        <div class="pos-win">
+          <div class="pos-bar">
+            <img src="/logo-mark.png" alt="" width="266" height="170" />
+            <span class="pos-crumb">Punto de venta<i>/</i>Caja 1 · Turno mañana</span>
+            <span class="pos-user"><span class="pos-av">L</span>Laura · Cajera</span>
+            <span class="pos-clock mono" data-clock>--:--</span>
+          </div>
+          <div class="pos-body">
+            <div class="pos-left">
+              <div class="pos-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6v12M6 6v12M9 6v12M13 6v12M16 6v12M20 6v12" /></svg>
+                <span class="ph" data-ph>Buscar o escanear código…</span>
+                <span data-typed></span><i class="caret"></i>
+              </div>
+              <div class="pos-cats">
+                <span class="on">Todo</span><span>Granos</span><span>Lácteos</span><span>Bebidas</span><span>Panadería</span><span>Aseo</span>
+              </div>
+              <div class="pos-tiles">
+                {products.map((p) => (
+                  <div class="tile" data-name={p.name} data-price={p.price} data-query={p.query}>
+                    <small>{p.sku} · {p.cat}</small>
+                    <b>{p.name}</b>
+                    <span>${fmt(p.price)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div class="pos-right">
+              <div class="pos-cart-h">
+                <span>Venta <b class="mono" data-sale>#1042</b></span>
+                <span class="muted" data-count>0 productos</span>
+              </div>
+              <ul class="pos-cart" data-cart></ul>
+              <div class="pos-sum">
+                <div class="row"><span>Total</span><b class="mono" data-total>$0</b></div>
+                <div class="pos-pay" data-pay>
+                  <button tabindex="-1" data-m="efectivo">Efectivo</button>
+                  <button tabindex="-1" data-m="nequi">Nequi</button>
+                  <button tabindex="-1" data-m="daviplata">Daviplata</button>
+                  <button tabindex="-1" data-m="tarjeta">Tarjeta</button>
+                </div>
+                <button class="pos-go" tabindex="-1" data-go><span data-go-label>Cobrar</span><span class="mono" data-go-total>$0</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="pos-toast" data-toast>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8.5l3 3 7-7" /></svg>
+            Venta registrada · tiquete enviado a la impresora
+          </div>
+        </div>
+
+        <div class="printer" aria-hidden="true">
+          <div class="printer-body"><span class="led" data-led></span><span class="mono">TÉRMICA 80 mm</span></div>
+          <div class="printer-slot"></div>
+          <div class="receipt-clip" data-clip><div class="receipt" data-receipt></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .hero { position: relative; padding: 148px 0 clamp(90px, 10vw, 140px); overflow: clip; }
+  .hero-bg { position: absolute; inset: 0 0 auto; height: 900px; pointer-events: none; }
+  .hero-glow {
+    position: absolute;
+    left: 50%;
+    top: -420px;
+    width: 1500px;
+    height: 1000px;
+    transform: translateX(-50%);
+    background: radial-gradient(closest-side, rgba(47, 128, 224, .26), rgba(47, 128, 224, .05) 60%, transparent);
+  }
+  .hero-chart {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .6;
+    -webkit-mask-image: linear-gradient(180deg, #000 35%, transparent 92%);
+    mask-image: linear-gradient(180deg, #000 35%, transparent 92%);
+  }
+  .hero-chart .gl line { stroke: rgba(140, 175, 225, .07); stroke-width: 1; }
+  .hero-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: hc-draw 2.8s .4s cubic-bezier(.6, .1, .2, 1) forwards; }
+  .hero-area { opacity: 0; animation: hc-fade 1.6s 2s forwards; }
+  .hero-dot { fill: var(--cyan); opacity: 0; transform-origin: 1300px 250px; animation: hc-fade .4s 2.7s forwards, hc-pulse 2.4s 3s ease-out infinite; }
+  @keyframes hc-draw { to { stroke-dashoffset: 0; } }
+  @keyframes hc-fade { to { opacity: 1; } }
+  @keyframes hc-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.8); opacity: .4; } 100% { transform: scale(1); opacity: 1; } }
+
+  .hero-copy { position: relative; }
+  .hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 14px 5px 5px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: rgba(10, 20, 36, .6);
+    font-size: 13px;
+    color: var(--ink-2);
+    transition: border-color .25s, color .25s;
+  }
+  .hero-pill .tag { padding: 5px 9px; border-radius: 999px; background: var(--blue); color: #fff; font: 600 10.5px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+  .hero-pill svg { width: 14px; height: 14px; transition: transform .35s var(--ease); }
+  .hero-pill:hover { border-color: rgba(79, 184, 245, .6); color: var(--ink); }
+  .hero-pill:hover svg { transform: translateX(3px); }
+  .hero-title { margin-top: 30px; font-size: clamp(40px, 6.6vw, 90px); letter-spacing: -.045em; line-height: .98; }
+  .hero-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: end; margin-top: 40px; }
+  .hero-lead { max-width: 50ch; font-size: clamp(17px, 1.45vw, 20px); color: var(--ink-2); }
+  .hero-lead strong { color: var(--ink); font-weight: 600; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-facts { display: flex; gap: 22px; margin-top: 18px; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .hero-facts li { display: flex; align-items: center; gap: 8px; }
+  .hero-facts li::before { content: ''; width: 6px; height: 6px; border-radius: 2px; background: var(--ok); }
+  @media (max-width: 900px) {
+    .hero { padding-top: 120px; }
+    .hero-row { grid-template-columns: 1fr; gap: 28px; }
+    .hero-facts { flex-wrap: wrap; gap: 10px 18px; }
+  }
+
+  .hero-stage { margin-top: clamp(56px, 7vw, 88px); perspective: 1800px; scroll-margin-top: 90px; }
+  .hero-tilt {
+    transform-origin: 50% 0;
+    transform: rotateX(calc(14deg * (1 - var(--p, 0)))) scale(calc(.93 + .07 * var(--p, 0)));
+    will-change: transform;
+  }
+
+  /* POS en vivo */
+  .pos { display: grid; grid-template-columns: minmax(0, 1fr) 268px; gap: 28px; align-items: start; }
+  .pos-win {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line-2);
+    border-radius: 18px;
+    background: linear-gradient(180deg, #0c1729, #08111f);
+    box-shadow: 0 50px 120px -40px rgba(0, 0, 0, .9), inset 0 1px 0 rgba(255, 255, 255, .04);
+  }
+  .pos-bar { display: flex; align-items: center; gap: 14px; height: 52px; padding: 0 18px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--ink-2); }
+  .pos-bar img { width: auto; height: 20px; }
+  .pos-crumb { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pos-crumb i { margin: 0 8px; font-style: normal; color: var(--ink-3); }
+  .pos-user { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .pos-av { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #16345f; color: var(--cyan); font: 700 11px var(--f-display); }
+  .pos-clock { font-size: 12px; color: var(--ink-3); }
+  .pos-body { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); min-height: 452px; }
+  .pos-left { padding: 18px; border-right: 1px solid var(--line); }
+  .pos-search { display: flex; align-items: center; gap: 10px; height: 42px; padding: 0 14px; border: 1px solid var(--line-2); border-radius: 10px; background: rgba(5, 10, 20, .6); font: 13px var(--f-mono); }
+  .pos-search svg { width: 18px; height: 18px; color: var(--ink-3); flex-shrink: 0; }
+  .pos-search .ph { color: var(--ink-3); }
+  .pos-search .ph[hidden] { display: none; }
+  .caret { width: 1.5px; height: 16px; margin-left: -6px; background: var(--sky); animation: caret 1s steps(1) infinite; }
+  @keyframes caret { 50% { opacity: 0; } }
+  .pos-cats { display: flex; gap: 6px; margin: 14px 0; overflow: hidden; }
+  .pos-cats span { padding: 6px 11px; border: 1px solid var(--line); border-radius: 8px; font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+  .pos-cats span.on { border-color: rgba(79, 184, 245, .4); background: rgba(47, 128, 224, .16); color: var(--cyan); }
+  .pos-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .tile { position: relative; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: rgba(255, 255, 255, .015); transition: border-color .25s, background .25s, transform .25s; }
+  .tile small { display: block; font: 10px var(--f-mono); letter-spacing: .03em; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile b { display: block; margin-top: 6px; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile span { display: block; margin-top: 2px; font: 12px var(--f-mono); color: var(--sky); }
+  .tile.hit { border-color: var(--sky); background: rgba(47, 128, 224, .14); transform: scale(.97); }
+  .tile.hit::after { content: ''; position: absolute; inset: -1px; border-radius: inherit; animation: tile-ping .7s ease-out; }
+  @keyframes tile-ping { from { box-shadow: 0 0 0 0 rgba(79, 184, 245, .55); } to { box-shadow: 0 0 0 12px rgba(79, 184, 245, 0); } }
+  .pos-right { display: flex; flex-direction: column; padding: 18px; }
+  .pos-cart-h { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-2); }
+  .pos-cart-h b { color: var(--ink); font-weight: 500; }
+  .pos-cart { flex: 1; display: flex; flex-direction: column; gap: 2px; min-height: 210px; margin: 12px 0; }
+  .ci { display: grid; grid-template-columns: 1fr auto; gap: 1px 10px; padding: 8px 10px; border-radius: 8px; animation: ci-in .45s var(--ease); transition: background .3s; }
+  .ci .n { font-size: 13px; }
+  .ci .q { font: 11px var(--f-mono); color: var(--ink-3); transition: color .3s; }
+  .ci .t { grid-row: span 2; align-self: center; font: 600 13px var(--f-mono); }
+  .ci.bump { background: rgba(47, 128, 224, .1); }
+  .ci.bump .q { color: var(--cyan); }
+  @keyframes ci-in { from { opacity: 0; transform: translateX(14px); } }
+  .pos-sum { padding-top: 14px; border-top: 1px dashed var(--line-2); }
+  .pos-sum .row { display: flex; justify-content: space-between; align-items: baseline; }
+  .pos-sum .row span { font-size: 13px; color: var(--ink-2); }
+  .pos-sum .row b { font: 700 26px var(--f-mono); letter-spacing: -.03em; }
+  .pos-pay { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 14px 0 10px; }
+  .pos-pay button { padding: 8px 0; border: 1px solid var(--line); border-radius: 8px; font-size: 11.5px; color: var(--ink-2); cursor: default; transition: all .25s; }
+  .pos-pay button.on { border-color: var(--sky); background: rgba(47, 128, 224, .14); color: var(--cyan); }
+  .pos-go { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 46px; border-radius: 10px; background: var(--blue); color: #fff; font-size: 14px; font-weight: 600; cursor: default; transition: transform .15s, background .25s, color .25s; }
+  .pos-go.press { transform: scale(.97); background: #1f6bd0; }
+  .pos-go.done { background: var(--ok); color: #04220f; }
+  .pos-go.done [data-go-total] { display: none; }
+  .pos-toast {
+    position: absolute;
+    left: 37%;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid rgba(61, 220, 151, .35);
+    border-radius: 10px;
+    background: #0d2a20;
+    color: var(--ok);
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, 16px);
+    transition: opacity .4s, transform .5s var(--ease);
+  }
+  .pos-toast svg { width: 15px; height: 15px; }
+  .pos-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  .printer { position: relative; padding-top: 4px; }
+  .printer-body {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    padding: 0 16px;
+    border: 1px solid var(--line-2);
+    border-radius: 14px 14px 8px 8px;
+    background: linear-gradient(180deg, #1a2639, #0f1828);
+    box-shadow: 0 24px 40px -20px rgba(0, 0, 0, .9);
+  }
+  .printer-body .mono { font-size: 10.5px; letter-spacing: .12em; color: var(--ink-3); }
+  .led { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px var(--ok); }
+  .led.busy { animation: led .28s steps(1) infinite; }
+  @keyframes led { 50% { opacity: .2; } }
+  .printer-slot { position: absolute; z-index: 3; left: 16px; right: 16px; top: 54px; height: 6px; border-radius: 3px; background: #02050a; box-shadow: inset 0 1px 2px #000; }
+  .receipt-clip { position: relative; z-index: 1; height: 0; margin: 0 24px; overflow: hidden; transition: height .16s linear, transform .7s var(--ease), opacity .6s; }
+  .receipt-clip.tear { transform: translateY(40px) rotate(-4deg); opacity: 0; }
+  .receipt {
+    position: relative;
+    padding: 14px 14px 24px;
+    background: #f3f0e8;
+    color: #1b1d22;
+    font: 10.5px/1.6 var(--f-mono);
+    -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 12px 100%;
+    mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 12px 100%;
+  }
+  .rc-c { text-align: center; }
+  .rc-name { font-weight: 700; font-size: 11.5px; letter-spacing: .04em; }
+  .rc-hr { margin: 7px 0; border-top: 1px dashed #8d8d8d; }
+  .rc-row { display: flex; justify-content: space-between; gap: 8px; }
+  .rc-row span:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rc-big { font-weight: 700; font-size: 12.5px; }
+  .rc-fe { display: grid; grid-template-columns: 54px 1fr; gap: 10px; align-items: center; font-size: 9.5px; line-height: 1.5; }
+  .rc-qr { width: 54px; height: 54px; }
+  .rc-stamp-wrap { display: flex; justify-content: center; padding: 10px 0 6px; }
+  .rc-stamp {
+    padding: 4px 10px;
+    border: 2px solid #1f5fbf;
+    border-radius: 6px;
+    color: #1f5fbf;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: .12em;
+    opacity: 0;
+    transform: rotate(-7deg) scale(1.8);
+  }
+  .rc-stamp.hit { opacity: .9; transform: rotate(-7deg) scale(1); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1), opacity .2s; }
+  .rc-thanks { margin-top: 4px; color: #55585f; }
+
+  @media (max-width: 1080px) {
+    .pos { grid-template-columns: 1fr; }
+    .printer { display: none; }
+  }
+  @media (max-width: 720px) {
+    .pos-body { grid-template-columns: 1fr; }
+    .pos-left { border-right: 0; border-bottom: 1px solid var(--line); }
+    .pos-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pos-tiles .tile:nth-child(n + 7) { display: none; }
+    .pos-user, .pos-clock { display: none; }
+    .pos-cart { min-height: 160px; }
+    .pos-toast { left: 50%; font-size: 12px; }
+    .hero-tilt { transform: none; }
+  }
+</style>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const tilt = document.querySelector<HTMLElement>('[data-tilt]');
+  if (tilt) {
+    if (reduce) tilt.style.setProperty('--p', '1');
+    else {
+      const update = () => {
+        const p = Math.min(Math.max(scrollY / (innerHeight * 0.55), 0), 1);
+        tilt.style.setProperty('--p', p.toFixed(3));
+      };
+      addEventListener('scroll', update, { passive: true });
+      update();
+    }
+  }
+
+  const root = document.querySelector<HTMLElement>('[data-pos]');
+  if (root) runPos(root);
+
+  function runPos(root: HTMLElement) {
+    const q = <T extends Element = HTMLElement>(s: string) => root.querySelector(s) as T;
+    const tiles = [...root.querySelectorAll<HTMLElement>('.tile')];
+    const cart = q('[data-cart]');
+    const totalEl = q('[data-total]');
+    const goTotal = q('[data-go-total]');
+    const goLabel = q('[data-go-label]');
+    const countEl = q('[data-count]');
+    const saleEl = q('[data-sale]');
+    const typed = q('[data-typed]');
+    const ph = q('[data-ph]');
+    const pay = [...root.querySelectorAll<HTMLElement>('[data-pay] button')];
+    const go = q('[data-go]');
+    const toast = q('[data-toast]');
+    const clip = q('[data-clip]');
+    const receipt = q('[data-receipt]');
+    const led = q('[data-led]');
+    const clock = q('[data-clock]');
+
+    const fmt = (n: number) => n.toLocaleString('es-CO');
+    const hhmm = () => new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+    clock.textContent = hhmm();
+    setInterval(() => (clock.textContent = hhmm()), 30000);
+
+    let visible = false;
+    new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(root);
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const wait = async (ms: number) => {
+      if (reduce) return;
+      await sleep(ms);
+      while (!visible || document.hidden) await sleep(250);
+    };
+
+    let shown = 0;
+    const setTotal = (target: number) => {
+      const from = shown;
+      const t0 = performance.now();
+      const step = (t: number) => {
+        const k = reduce ? 1 : Math.min((t - t0) / 450, 1);
+        shown = Math.round((from + (target - from) * (1 - Math.pow(1 - k, 3))) / 100) * 100;
+        totalEl.textContent = goTotal.textContent = '$' + fmt(shown);
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    const type = async (text: string) => {
+      ph.hidden = true;
+      typed.textContent = '';
+      for (const ch of text) {
+        typed.textContent += ch;
+        await wait(60);
+      }
+    };
+
+    const qr = (seed: number) => {
+      let s = seed;
+      const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+      const finder = (x: number, y: number) =>
+        `<rect x="${x}" y="${y}" width="7" height="7"/><rect x="${x + 1}" y="${y + 1}" width="5" height="5" fill="#f3f0e8"/><rect x="${x + 2}" y="${y + 2}" width="3" height="3"/>`;
+      let dots = '';
+      for (let y = 0; y < 21; y++)
+        for (let x = 0; x < 21; x++) {
+          const inFinder = (x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12);
+          if (!inFinder && rnd() > 0.5) dots += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
+        }
+      return `<svg class="rc-qr" viewBox="0 0 21 21" fill="#1b1d22" shape-rendering="crispEdges">${finder(0, 0)}${finder(14, 0)}${finder(0, 14)}${dots}</svg>`;
+    };
+    const cufe = (seed: number) => {
+      let s = (seed * 7919) % 2147483647;
+      let out = '';
+      for (let i = 0; i < 12; i++) {
+        s = (s * 48271) % 2147483647;
+        out += ((s >> 4) % 16).toString(16);
+      }
+      return `${out.slice(0, 8)}…${out.slice(8)}`;
+    };
+
+    type Line = { name: string; price: number; qty: number; el: HTMLLIElement };
+
+    const sequences: [number, number][][] = [
+      [[0, 2], [1, 1], [2, 1], [3, 2], [7, 1]],
+      [[5, 1], [4, 1], [6, 2], [8, 1]],
+    ];
+
+    async function printReceipt(lines: Line[], total: number, method: string, sale: number) {
+      led.classList.add('busy');
+      const d = new Date();
+      const date = d.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const received = method === 'efectivo' ? Math.ceil(total / 10000) * 10000 : total;
+      const payRows =
+        method === 'efectivo'
+          ? `<div class="rc-row"><span>Efectivo</span><span>$${fmt(received)}</span></div><div class="rc-row"><span>Cambio</span><span>$${fmt(received - total)}</span></div>`
+          : `<div class="rc-row"><span>Nequi</span><span>$${fmt(total)}</span></div>`;
+      const parts = [
+        `<div class="rc-c rc-name">MINIMERCADO LA ESQUINA</div>`,
+        `<div class="rc-c">Barrio San José · Caja 1</div>`,
+        `<div class="rc-c">${date} ${hhmm()} · Laura</div>`,
+        `<div class="rc-hr"></div>`,
+        ...lines.map((l) => `<div class="rc-row"><span>${l.qty} ${l.name}</span><span>${fmt(l.qty * l.price)}</span></div>`),
+        `<div class="rc-hr"></div>`,
+        `<div class="rc-row rc-big"><span>TOTAL</span><span>$${fmt(total)}</span></div>`,
+        payRows,
+        `<div class="rc-hr"></div>`,
+        `<div class="rc-fe">${qr(sale)}<div><b>FACTURA ELECTRÓNICA</b><br>FE-${sale}<br>CUFE ${cufe(sale)}</div></div>`,
+        `<div class="rc-stamp-wrap"><span class="rc-stamp">VALIDADA DIAN</span></div>`,
+        `<div class="rc-c rc-thanks">Gracias por su compra</div>`,
+      ];
+      for (const html of parts) {
+        receipt.insertAdjacentHTML('beforeend', html);
+        clip.style.height = receipt.offsetHeight + 'px';
+        await wait(150);
+      }
+      led.classList.remove('busy');
+      await wait(250);
+      receipt.querySelector('.rc-stamp')?.classList.add('hit');
+    }
+
+    async function loop() {
+      let sale = 1042;
+      for (let n = 0; ; n++) {
+        const seq = sequences[n % sequences.length];
+        const method = n % 2 === 0 ? 'efectivo' : 'nequi';
+        cart.innerHTML = '';
+        shown = 0;
+        totalEl.textContent = goTotal.textContent = '$0';
+        countEl.textContent = '0 productos';
+        saleEl.textContent = '#' + sale;
+        goLabel.textContent = 'Cobrar';
+        go.classList.remove('done');
+        pay.forEach((b) => b.classList.remove('on'));
+
+        const lines: Line[] = [];
+        let total = 0;
+        await wait(800);
+
+        for (const [ti, qty] of seq) {
+          const tile = tiles[ti];
+          const name = tile.dataset.name!;
+          const price = Number(tile.dataset.price);
+          await type(tile.dataset.query!);
+          await wait(260);
+          tile.classList.add('hit');
+          for (let k = 0; k < qty; k++) {
+            let line = lines.find((l) => l.name === name);
+            if (!line) {
+              const el = document.createElement('li');
+              el.className = 'ci';
+              cart.append(el);
+              line = { name, price, qty: 0, el };
+              lines.push(line);
+            }
+            line.qty++;
+            line.el.innerHTML = `<span class="n">${name}</span><span class="t">${fmt(line.qty * price)}</span><span class="q">${line.qty} × ${fmt(price)}</span>`;
+            if (k > 0) {
+              line.el.classList.remove('bump');
+              void line.el.offsetWidth;
+              line.el.classList.add('bump');
+            }
+            total += price;
+            setTotal(total);
+            const units = lines.reduce((a, l) => a + l.qty, 0);
+            countEl.textContent = `${units} ${units === 1 ? 'producto' : 'productos'}`;
+            await wait(450);
+          }
+          tile.classList.remove('hit');
+          typed.textContent = '';
+          ph.hidden = false;
+          await wait(320);
+        }
+
+        await wait(350);
+        pay.find((b) => b.dataset.m === method)!.classList.add('on');
+        await wait(700);
+        go.classList.add('press');
+        await wait(170);
+        go.classList.remove('press');
+        go.classList.add('done');
+        goLabel.textContent = 'Venta registrada';
+        toast.classList.add('show');
+
+        await printReceipt(lines, total, method, sale);
+        if (reduce) return;
+        await wait(2800);
+        toast.classList.remove('show');
+        clip.classList.add('tear');
+        await wait(700);
+        clip.style.transition = 'none';
+        clip.style.height = '0px';
+        receipt.innerHTML = '';
+        clip.classList.remove('tear');
+        void clip.offsetWidth;
+        clip.style.transition = '';
+        sale++;
+      }
+    }
+    loop();
+  }
+</script>

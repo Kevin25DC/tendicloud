@@ -1,0 +1,335 @@
+---
+const steps = [
+  {
+    tab: 'Vender',
+    title: 'Cobra en segundos, aunque haya fila.',
+    text: 'Busca por nombre o pasa el lector de código de barras. Las cantidades se suman solas y el cliente se va con su tiquete o su factura electrónica.',
+    points: ['Lector de código de barras', 'Medios de pago que tú configuras', 'Tiquete térmico o factura DIAN'],
+  },
+  {
+    tab: 'Caja',
+    title: 'Abre y cierra turno sin sorpresas.',
+    text: 'Cada cajero abre su turno con una base. Al cerrar, TendiCloud muestra lo esperado por cada medio de pago contra lo contado, y el arqueo queda guardado para reimprimirlo cuando quieras.',
+    points: ['Varias cajas al mismo tiempo', 'Arqueo por medio de pago', 'Historial de turnos imprimible'],
+  },
+  {
+    tab: 'Inventario',
+    title: 'Sabes qué tienes antes de que se acabe.',
+    text: 'Cada venta y cada compra mueven las existencias. Ves de un vistazo lo que se está quedando corto, sin contar estante por estante.',
+    points: ['Existencias al día', 'Productos, categorías y precios', 'Lo que se está agotando, a la vista'],
+  },
+  {
+    tab: 'Cartera',
+    title: 'El cuaderno del fiado, pero que no se pierde.',
+    text: 'Registra ventas a crédito por cliente, recibe abonos parciales y mira quién debe, cuánto y desde cuándo.',
+    points: ['Saldo por cliente', 'Abonos parciales', 'Antigüedad de cada deuda'],
+  },
+  {
+    tab: 'Compras',
+    title: 'Lo que llega del proveedor entra solo al inventario.',
+    text: 'Registra el pedido de cada proveedor y, al recibirlo, las existencias y los costos se actualizan sin digitar dos veces.',
+    points: ['Proveedores', 'Compras con su costo', 'Inventario actualizado al recibir'],
+  },
+  {
+    tab: 'Reportes',
+    title: 'Los números del día, sin abrir Excel.',
+    text: 'Ventas por hora, tiquete promedio y los productos que más salen. Desde el mostrador o desde la casa.',
+    points: ['Ventas por día y por hora', 'Productos más vendidos', 'Rendimiento por caja'],
+  },
+];
+const hours = [14, 26, 44, 36, 30, 52, 66, 42, 34, 46, 60, 78, 64, 38];
+---
+<section class="sec story-sec" id="modulos">
+  <div class="wrap">
+    <div class="story-head">
+      <div>
+        <span class="eyebrow" data-reveal>Módulos</span>
+        <h2 class="sec-title" data-split>Todo el negocio en una sola pantalla.</h2>
+      </div>
+      <p class="sec-lead" data-reveal style="--d:.2s">
+        Seis módulos que hablan entre sí: lo que vendes descuenta inventario, lo que fías entra a cartera y lo que cobras cuadra en el
+        arqueo.
+      </p>
+    </div>
+
+    <div class="story" data-story>
+      <div class="story-steps">
+        <div class="story-rail"><i></i></div>
+        {steps.map((s, i) => (
+          <article class={`step${i === 0 ? ' on' : ''}`} data-step={i}>
+            <span class="step-k mono">{String(i + 1).padStart(2, '0')} · {s.tab}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <ul>{s.points.map((p) => <li>{p}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+
+      <div class="story-panel" aria-hidden="true">
+        <div class="win" data-win style="--a:0">
+          <div class="win-tabs">
+            {steps.map((s, i) => <button tabindex="-1" class={i === 0 ? 'on' : ''} data-tab={i}>{s.tab}</button>)}
+            <i class="win-ind"></i>
+          </div>
+          <div class="win-body">
+            <!-- Vender -->
+            <div class="scr on" data-scr>
+              <div class="sh"><b>Nueva venta</b><span>Caja 1 · Laura</span></div>
+              <div class="sv-scan">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6v12M6 6v12M9 6v12M13 6v12M16 6v12M20 6v12" /></svg>
+                <span class="mono">7702001 043218</span>
+                <i class="laser"></i>
+              </div>
+              <div class="tbl">
+                {[
+                  ['Arroz 500 g', '2 × 2.900', '5.800'],
+                  ['Aceite 1 L', '1 × 11.900', '11.900'],
+                  ['Huevos AA x12', '1 × 9.800', '9.800'],
+                  ['Leche entera 1 L', '2 × 4.300', '8.600'],
+                  ['Gaseosa 1,5 L', '1 × 5.900', '5.900'],
+                ].map(([a, b, c], n) => (
+                  <div class="tr c3" style={`--n:${n}`}><span>{a}</span><span class="num muted">{b}</span><span class="num">{c}</span></div>
+                ))}
+              </div>
+              <div class="foot"><span class="muted">Total · 7 productos</span><b class="mono big">$42.000</b></div>
+            </div>
+
+            <!-- Caja -->
+            <div class="scr" data-scr>
+              <div class="sh"><b>Arqueo de caja</b><span>Turno mañana · Caja 1</span></div>
+              <div class="tbl">
+                <div class="th c4"><span>Medio</span><span class="num">Esperado</span><span class="num">Contado</span><span></span></div>
+                {[
+                  ['Efectivo', '812.400', 100],
+                  ['Nequi', '356.000', 44],
+                  ['Daviplata', '98.500', 12],
+                  ['Tarjeta', '214.900', 26],
+                ].map(([m, v, w], n) => (
+                  <div class="tr c4" style={`--n:${n}`}>
+                    <span>{m}</span><span class="num muted">{v}</span><span class="num">{v}</span>
+                    <span class="bar"><i style={`--w:${w}%;--dl:${0.2 + n * 0.1}s`}></i></span>
+                  </div>
+                ))}
+              </div>
+              <div class="foot"><span class="chip ok">Caja cuadrada · diferencia $0</span><b class="mono big">$1.481.800</b></div>
+            </div>
+
+            <!-- Inventario -->
+            <div class="scr" data-scr>
+              <div class="sh"><b>Inventario</b><span>248 productos</span></div>
+              <div class="tbl">
+                {[
+                  ['Arroz 500 g', 72, '86 und', ''],
+                  ['Aceite 1 L', 14, '6 und', 'Poco'],
+                  ['Huevos AA x12', 55, '34 und', ''],
+                  ['Café molido 250 g', 8, '3 und', 'Poco'],
+                  ['Panela 500 g', 64, '52 und', ''],
+                ].map(([name, w, u, s], n) => (
+                  <div class="tr c4i" style={`--n:${n}`}>
+                    <span>{name}</span>
+                    <span class="bar"><i style={`--w:${w}%;--dl:${0.2 + n * 0.08}s;${s ? '--c:var(--warn)' : ''}`}></i></span>
+                    <span class="num">{u}</span>
+                    <span>{s && <span class="chip warn">{s}</span>}</span>
+                  </div>
+                ))}
+              </div>
+              <div class="foot"><span class="muted">2 productos se están agotando</span><span class="chip warn">Revisar</span></div>
+            </div>
+
+            <!-- Cartera -->
+            <div class="scr" data-scr>
+              <div class="sh"><b>Cartera</b><span>Ventas a crédito</span></div>
+              <div class="tbl">
+                {[
+                  ['MG', 'Marta Gómez', 'desde 02/11', '86.000', '18 días', 'warn'],
+                  ['LP', 'Luis Pérez', 'desde 15/11', '42.500', 'Al día', 'ok'],
+                  ['CR', 'Carmen Ruiz', 'desde 18/11', '23.900', 'Al día', 'ok'],
+                  ['JD', 'Jorge Díaz', 'desde 28/10', '112.000', '23 días', 'warn'],
+                ].map(([ini, name, since, bal, st, k], n) => (
+                  <div class="tr c4c" style={`--n:${n}`}>
+                    <span class="av">{ini}</span>
+                    <span><b class="who">{name}</b><small class="muted">{since}</small></span>
+                    <span class="num">${bal}</span>
+                    <span class={`chip ${k}`}>{st}</span>
+                  </div>
+                ))}
+              </div>
+              <div class="sc-toast"><span class="chip ok">Abono</span> Luis Pérez pagó <b class="mono">$20.000</b></div>
+              <div class="foot"><span class="muted">Total por cobrar</span><b class="mono big">$264.400</b></div>
+            </div>
+
+            <!-- Compras -->
+            <div class="scr" data-scr>
+              <div class="sh"><b>Compra #318</b><span>Distribuidora El Progreso</span></div>
+              <div class="tbl">
+                {[
+                  ['Arroz 500 g', '48', '2.150'],
+                  ['Aceite 1 L', '24', '9.400'],
+                  ['Panela 500 g', '30', '2.500'],
+                  ['Gaseosa 1,5 L', '36', '4.100'],
+                ].map(([p, c, v], n) => (
+                  <div class="tr c4k" style={`--n:${n}`}>
+                    <span class="ck" style={`--dl:${0.5 + n * 0.25}s`}><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3.5 8.5l3 3 6-6.5" /></svg></span>
+                    <span>{p}</span><span class="num muted">× {c}</span><span class="num">${v}</span>
+                  </div>
+                ))}
+              </div>
+              <div class="foot"><span class="chip ok">Recibida · inventario actualizado</span><b class="mono big">$551.400</b></div>
+            </div>
+
+            <!-- Reportes -->
+            <div class="scr" data-scr>
+              <div class="sh"><b>Resumen de hoy</b><span>Todas las cajas</span></div>
+              <div class="kpis">
+                <div><small>Ventas</small><b class="mono">$1.481.800</b></div>
+                <div><small>Tiquetes</small><b class="mono">96</b></div>
+                <div><small>Promedio</small><b class="mono">$15.435</b></div>
+              </div>
+              <div class="chart">
+                {hours.map((h, i) => (
+                  <span style={`--h:${h}%;--dl:${0.15 + i * 0.04}s`}><i></i><small>{i + 6}</small></span>
+                ))}
+              </div>
+              <div class="foot"><span class="muted">Más vendido: Huevos AA x12</span><b class="mono">41 und</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .story-head { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: end; }
+  .story { position: relative; display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(32px, 5vw, 80px); margin-top: clamp(40px, 6vw, 80px); }
+  .story-steps { position: relative; padding-left: 36px; }
+  .story-rail { position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--line); }
+  .story-rail i { position: absolute; left: 0; top: 0; width: 1px; height: calc(var(--sp, 0) * 100%); background: linear-gradient(var(--blue), var(--cyan)); }
+  .step { display: flex; flex-direction: column; justify-content: center; min-height: 76vh; opacity: .28; transition: opacity .5s; }
+  .step.on { opacity: 1; }
+  .step-k { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--sky); }
+  .step h3 { margin-top: 14px; font: 800 clamp(26px, 3vw, 40px)/1.08 var(--f-display); letter-spacing: -.03em; }
+  .step p { max-width: 46ch; margin-top: 16px; color: var(--ink-2); }
+  .step ul { display: grid; gap: 10px; margin-top: 22px; }
+  .step li { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+  .step li::before { content: ''; width: 14px; height: 1px; background: var(--sky); }
+
+  .story-panel { position: sticky; top: calc(50vh - 260px); align-self: start; height: 520px; }
+  .win { display: flex; flex-direction: column; height: 100%; overflow: hidden; border: 1px solid var(--line-2); border-radius: 18px; background: linear-gradient(180deg, #0c1729, #08111f); box-shadow: 0 50px 110px -40px rgba(0, 0, 0, .95), inset 0 1px 0 rgba(255, 255, 255, .04); }
+  .win-tabs { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); border-bottom: 1px solid var(--line); }
+  .win-tabs button { height: 46px; font-size: 12.5px; color: var(--ink-3); cursor: default; transition: color .3s; }
+  .win-tabs button.on { color: var(--ink); }
+  .win-ind { position: absolute; left: 0; bottom: -1px; width: calc(100% / 6); height: 2px; background: var(--sky); transform: translateX(calc(var(--a) * 100%)); transition: transform .6s var(--ease); }
+  .win-body { position: relative; flex: 1; }
+  .scr { position: absolute; inset: 0; padding: 22px; opacity: 0; transform: translateY(18px) scale(.985); pointer-events: none; transition: opacity .45s, transform .7s var(--ease); }
+  .scr.on { opacity: 1; transform: none; }
+
+  .sh { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+  .sh b { font: 700 18px var(--f-display); letter-spacing: -.015em; }
+  .sh span { font: 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+  .tbl { display: grid; gap: 2px; }
+  .tr, .th { display: grid; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 9px; font-size: 13px; }
+  .th { padding-block: 4px 8px; font: 10.5px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .tr:nth-child(odd) { background: rgba(255, 255, 255, .022); }
+  .scr.on .tr { animation: tr-in .55s var(--ease) both; animation-delay: calc(var(--n, 0) * 70ms + .1s); }
+  @keyframes tr-in { from { opacity: 0; transform: translateY(8px); } }
+  .c3 { grid-template-columns: 1fr 92px 72px; }
+  .c4 { grid-template-columns: 90px 1fr 1fr 110px; }
+  .c4i { grid-template-columns: 1.2fr 1fr 64px 56px; }
+  .c4c { grid-template-columns: 30px 1fr 84px 70px; }
+  .c4k { grid-template-columns: 22px 1fr 50px 72px; }
+  .num { font-family: var(--f-mono); text-align: right; }
+  .big { font-size: 22px; font-weight: 700; letter-spacing: -.03em; }
+  .bar { display: block; height: 6px; overflow: hidden; border-radius: 3px; background: rgba(140, 175, 225, .12); }
+  .bar i { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--c, var(--blue)); transition: width 1.1s var(--ease) var(--dl, .2s); }
+  .scr.on .bar i { width: var(--w); }
+  .foot { position: absolute; left: 22px; right: 22px; bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 14px; border-top: 1px dashed var(--line-2); font-size: 13px; }
+
+  .sv-scan { position: relative; display: flex; align-items: center; gap: 12px; height: 46px; margin-bottom: 12px; padding: 0 14px; overflow: hidden; border: 1px solid var(--line-2); border-radius: 10px; background: rgba(5, 10, 20, .6); font-size: 13px; }
+  .sv-scan svg { width: 20px; height: 20px; color: var(--ink-3); }
+  .laser { position: absolute; left: 8px; right: 8px; top: 50%; height: 1.5px; background: #ff5a5a; box-shadow: 0 0 10px 1px rgba(255, 90, 90, .8); animation: laser 1.8s ease-in-out infinite; }
+  @keyframes laser { 0%, 100% { transform: translateY(-14px); } 50% { transform: translateY(14px); } }
+
+  .av { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #16345f; color: var(--cyan); font: 700 10.5px var(--f-display); }
+  .who { display: block; font-weight: 600; }
+  .tr small { font-size: 11px; }
+  .sc-toast { position: absolute; left: 22px; bottom: 82px; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid rgba(61, 220, 151, .3); border-radius: 10px; background: #0d2a20; font-size: 13px; opacity: 0; transform: translateY(12px); }
+  .scr.on .sc-toast { animation: toast-in .6s var(--ease) 1.2s forwards; }
+  @keyframes toast-in { to { opacity: 1; transform: none; } }
+
+  .ck { display: grid; place-items: center; width: 20px; height: 20px; border: 1px solid var(--line-2); border-radius: 6px; color: transparent; transition: background .3s var(--dl), border-color .3s var(--dl), color .3s var(--dl); }
+  .ck svg { width: 12px; height: 12px; }
+  .scr.on .ck { background: var(--ok); border-color: var(--ok); color: #04220f; }
+
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .kpis div { padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; }
+  .kpis small { display: block; font-size: 11px; color: var(--ink-3); }
+  .kpis b { display: block; margin-top: 4px; font-size: 17px; letter-spacing: -.02em; }
+  .chart { display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; align-items: end; height: 190px; margin-top: 22px; }
+  .chart span { position: relative; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+  .chart i { display: block; height: 0; border-radius: 4px 4px 2px 2px; background: linear-gradient(180deg, var(--cyan), var(--blue)); transition: height 1s var(--ease) var(--dl); }
+  .scr.on .chart i { height: var(--h); }
+  .chart small { margin-top: 6px; font: 9.5px var(--f-mono); color: var(--ink-3); text-align: center; }
+
+  @media (max-width: 960px) {
+    .story-head { grid-template-columns: 1fr; gap: 0; }
+    .story { grid-template-columns: 1fr; gap: 0; }
+    .story-panel { order: -1; top: 72px; z-index: 2; height: 450px; }
+    .story-panel::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 40px; background: linear-gradient(var(--bg), transparent); }
+    .win-tabs button { font-size: 10.5px; }
+    .scr { padding: 16px; }
+    .foot { left: 16px; right: 16px; bottom: 14px; }
+    .tr { padding: 8px 10px; font-size: 12px; }
+    .c4 { grid-template-columns: 74px 1fr 1fr 60px; }
+    .chart { height: 140px; }
+    .step { min-height: 64vh; justify-content: flex-start; padding-top: 48px; }
+    .story-steps { padding-left: 20px; }
+  }
+  @media (max-width: 520px) {
+    .sv-scan { display: none; }
+    .c4i { grid-template-columns: 1fr 60px 54px 0; }
+    .sc-toast { display: none; }
+  }
+</style>
+
+<script>
+  const story = document.querySelector<HTMLElement>('[data-story]');
+  if (story) {
+    const steps = [...story.querySelectorAll<HTMLElement>('[data-step]')];
+    const screens = [...story.querySelectorAll<HTMLElement>('[data-scr]')];
+    const tabs = [...story.querySelectorAll<HTMLElement>('[data-tab]')];
+    const win = story.querySelector<HTMLElement>('[data-win]')!;
+    let active = 0;
+
+    const activate = (i: number) => {
+      if (i === active) return;
+      active = i;
+      steps.forEach((s, k) => s.classList.toggle('on', k === i));
+      tabs.forEach((t, k) => t.classList.toggle('on', k === i));
+      screens.forEach((s, k) => s.classList.toggle('on', k === i));
+      win.style.setProperty('--a', String(i));
+    };
+
+    const mobile = matchMedia('(max-width: 960px)');
+    let io: IntersectionObserver;
+    const observe = () => {
+      io?.disconnect();
+      io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => e.isIntersecting && activate(Number((e.target as HTMLElement).dataset.step))),
+        { rootMargin: mobile.matches ? '-62% 0px -30% 0px' : '-48% 0px -48% 0px' },
+      );
+      steps.forEach((s) => io.observe(s));
+    };
+    observe();
+    mobile.addEventListener('change', observe);
+
+    const rail = story.querySelector<HTMLElement>('.story-steps')!;
+    const update = () => {
+      const r = rail.getBoundingClientRect();
+      const p = Math.min(Math.max((innerHeight / 2 - r.top) / r.height, 0), 1);
+      rail.style.setProperty('--sp', p.toFixed(3));
+    };
+    addEventListener('scroll', update, { passive: true });
+    update();
+  }
+</script>

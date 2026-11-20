@@ -1,0 +1,53 @@
+---
+const rows = [
+  ['Tiendas de barrio', 'Minimercados', 'Droguerías', 'Panaderías', 'Ferreterías', 'Fruvers'],
+  ['Licoreras', 'Papelerías', 'Carnicerías', 'Misceláneas', 'Cacharrerías', 'Graneros'],
+];
+---
+<section class="marq" aria-label="Negocios para los que está hecho TendiCloud">
+  <div class="wrap marq-head" data-reveal>
+    <span class="eyebrow">Hecho para</span>
+    <p>Cualquier negocio con mostrador, caja y clientes que vuelven.</p>
+  </div>
+  {rows.map((items, r) => (
+    <div class={`marq-row${r === 1 ? ' rev' : ''}`}>
+      {[0, 1].map((copy) => (
+        <div class="marq-track" aria-hidden={copy === 1 ? 'true' : undefined}>
+          {items.map((t, i) => (
+            <>
+              <span class={`marq-item${(i + r) % 2 ? ' o' : ''}`}>{t}</span>
+              <span class="marq-sep" />
+            </>
+          ))}
+        </div>
+      ))}
+    </div>
+  ))}
+</section>
+
+<style is:global>
+  .marq { padding: clamp(64px, 8vw, 110px) 0; border-block: 1px solid var(--line); overflow: hidden; }
+  .marq-head { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 40px; }
+  .marq-head p { color: var(--ink-3); font-size: 14px; }
+  .marq-row {
+    display: flex;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marq-track { display: flex; flex-shrink: 0; align-items: center; animation: marq 46s linear infinite; }
+  .marq-row.rev .marq-track { animation-direction: reverse; animation-duration: 54s; }
+  .marq-row:hover .marq-track { animation-play-state: paused; }
+  @keyframes marq { to { transform: translateX(-100%); } }
+  .marq-item {
+    padding: 4px 0;
+    font: 800 clamp(30px, 4.6vw, 64px)/1.15 var(--f-display);
+    letter-spacing: -.035em;
+    white-space: nowrap;
+    transition: color .3s;
+  }
+  .marq-item.o { color: transparent; -webkit-text-stroke: 1.2px rgba(168, 182, 203, .5); }
+  .marq-item.o:hover { color: var(--sky); -webkit-text-stroke-color: var(--sky); }
+  .marq-sep { flex-shrink: 0; width: 12px; height: 12px; margin: 0 clamp(20px, 3vw, 44px); border-radius: 3px; background: var(--blue); transform: rotate(45deg); }
+  @media (max-width: 640px) { .marq-head { flex-direction: column; align-items: flex-start; gap: 12px; } }
+</style>

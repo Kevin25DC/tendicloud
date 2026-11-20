@@ -1,0 +1,122 @@
+---
+import { SITE } from '../config';
+
+const links = [
+  { href: '#producto', label: 'Producto' },
+  { href: '#modulos', label: 'Módulos' },
+  { href: '#ficha', label: 'Ficha técnica' },
+  { href: '#precios', label: 'Precios' },
+  { href: '#preguntas', label: 'Preguntas' },
+];
+---
+<header class="nav" data-nav>
+  <div class="wrap nav-row">
+    <a href="#top" class="nav-logo" aria-label="TendiCloud, ir al inicio">
+      <img class="mark" src="/logo-mark.png" alt="" width="266" height="170" />
+      <img class="word" src="/wordmark-dark.png" alt="TendiCloud" width="582" height="62" />
+    </a>
+    <nav class="nav-links" aria-label="Principal">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <div class="nav-cta">
+      <a href={SITE.loginUrl} class="nav-login">Entrar</a>
+      <a href={SITE.signupUrl} class="btn btn-primary btn-sm">Probar gratis</a>
+    </div>
+    <button class="nav-burger" aria-label="Abrir menú" aria-expanded="false" data-burger>
+      <span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-sheet" data-sheet>
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    <a href={SITE.signupUrl} class="btn btn-primary">Probar {SITE.trialDays} días gratis</a>
+  </div>
+</header>
+
+<style is:global>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+    border-bottom: 1px solid transparent;
+    transition: transform .5s var(--ease), background .3s, border-color .3s;
+  }
+  .nav.solid {
+    background: rgba(5, 10, 20, .74);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-color: var(--line);
+  }
+  .nav.hide { transform: translateY(-100%); }
+  .nav-row { display: flex; align-items: center; gap: 40px; height: 72px; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .nav-logo .mark { width: auto; height: 30px; transition: transform .6s var(--ease); }
+  .nav-logo:hover .mark { transform: translateY(-2px) rotate(-4deg); }
+  .nav-logo .word { width: auto; height: 15px; }
+  .nav-links { display: flex; gap: 2px; flex: 1; }
+  .nav-links a { position: relative; padding: 8px 12px; font-size: 14px; color: var(--ink-2); transition: color .2s; }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 3px;
+    height: 1px;
+    background: var(--sky);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .4s var(--ease);
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+  .nav-cta { display: flex; align-items: center; gap: 20px; }
+  .nav-login { font-size: 14px; color: var(--ink-2); transition: color .2s; }
+  .nav-login:hover { color: var(--ink); }
+  .nav-burger, .nav-sheet { display: none; }
+
+  @media (max-width: 960px) {
+    .nav-links, .nav-cta { display: none; }
+    .nav-row { justify-content: space-between; height: 64px; }
+    .nav-burger { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; width: 44px; height: 44px; }
+    .nav-burger span { width: 22px; height: 1.5px; background: var(--ink); transition: transform .35s var(--ease); }
+    .nav.open .nav-burger span:first-child { transform: translateY(3.75px) rotate(45deg); }
+    .nav.open .nav-burger span:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+    .nav-sheet {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      display: grid;
+      padding: 8px 16px 24px;
+      background: rgba(5, 10, 20, .97);
+      border-bottom: 1px solid var(--line);
+      clip-path: inset(0 0 100% 0);
+      transition: clip-path .5s var(--ease);
+    }
+    .nav.open .nav-sheet { clip-path: inset(0); }
+    .nav-sheet a:not(.btn) { padding: 14px 4px; font: 700 22px var(--f-display); letter-spacing: -.02em; border-bottom: 1px solid var(--line); }
+    .nav-sheet .btn { margin-top: 18px; }
+  }
+</style>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav]')!;
+  const burger = nav.querySelector<HTMLButtonElement>('[data-burger]')!;
+  let last = 0;
+  const onScroll = () => {
+    const y = scrollY;
+    nav.classList.toggle('solid', y > 10 || nav.classList.contains('open'));
+    nav.classList.toggle('hide', y > last && y > 480 && !nav.classList.contains('open'));
+    last = y;
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const setOpen = (open: boolean) => {
+    nav.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    onScroll();
+  };
+  burger.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+  nav.querySelectorAll('[data-sheet] a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+</script>

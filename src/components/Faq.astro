@@ -1,0 +1,60 @@
+---
+const faqs = [
+  ['¿Tengo que instalar algo?', 'No. TendiCloud funciona desde el navegador del computador, la tablet o el celular. Solo necesitas conexión a internet; la impresora y el lector se conectan por USB al equipo donde vendes.'],
+  ['¿Sirve para la facturación electrónica de la DIAN?', 'Sí. La factura electrónica sale desde el mismo POS, con su CUFE y su código QR. Para activarla necesitas tu RUT y una resolución de facturación vigente; te acompañamos en la configuración.'],
+  ['¿Qué impresora necesito?', 'Cualquier impresora térmica de 58 u 80 mm compatible con ESC/POS conectada por USB. Si ya tienes una en el mostrador, lo más probable es que funcione.'],
+  ['¿Puedo manejar el fiado?', 'Sí. El módulo de cartera guarda cuánto debe cada cliente y desde cuándo, y recibe abonos parciales. Se acabaron las hojas sueltas del cuaderno.'],
+  ['¿Puedo tener varias cajas vendiendo al tiempo?', 'Sí. Cada caja abre y cierra su propio turno, con su arqueo por medio de pago. El administrador ve todas las cajas y el historial de turnos.'],
+  ['¿Qué pasa con mis datos si dejo de usarlo?', 'Son tuyos. Antes de cancelar puedes pedir la exportación de tus productos, clientes y ventas.'],
+];
+---
+<section class="sec faq" id="preguntas">
+  <div class="wrap faq-grid">
+    <div>
+      <span class="eyebrow" data-reveal>Preguntas</span>
+      <h2 class="sec-title" data-split>Lo que nos preguntan en el mostrador.</h2>
+    </div>
+    <div class="faq-list">
+      {faqs.map(([q, a], i) => (
+        <div class="qa" data-reveal style={`--d:${i * 0.05}s`}>
+          <button aria-expanded="false" aria-controls={`qa-${i}`} id={`qa-btn-${i}`} data-qa>
+            <span>{q}</span>
+            <i aria-hidden="true"></i>
+          </button>
+          <div class="qa-body" id={`qa-${i}`} role="region" aria-labelledby={`qa-btn-${i}`}>
+            <div><p>{a}</p></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .faq-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .faq-list { border-top: 1px solid var(--line); }
+  .qa { border-bottom: 1px solid var(--line); }
+  .qa button { display: flex; justify-content: space-between; align-items: center; gap: 24px; width: 100%; padding: 26px 0; text-align: left; font: 600 clamp(16px, 1.5vw, 19px)/1.35 var(--f-body); transition: color .25s; }
+  .qa button:hover { color: var(--sky); }
+  .qa i { position: relative; flex-shrink: 0; width: 28px; height: 28px; border: 1px solid var(--line-2); border-radius: 50%; transition: transform .5s var(--ease), background .3s, border-color .3s; }
+  .qa i::before, .qa i::after { content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 1.5px; background: currentColor; transform: translate(-50%, -50%); }
+  .qa i::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .qa.open i { transform: rotate(45deg); background: var(--blue); border-color: var(--blue); }
+  .qa-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease); }
+  .qa-body > div { overflow: hidden; }
+  .qa-body p { max-width: 60ch; padding-bottom: 26px; color: var(--ink-2); opacity: 0; transform: translateY(-6px); transition: opacity .4s, transform .5s var(--ease); }
+  .qa.open .qa-body { grid-template-rows: 1fr; }
+  .qa.open .qa-body p { opacity: 1; transform: none; }
+  @media (max-width: 960px) { .faq-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-qa]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.qa')!;
+      const open = !item.classList.contains('open');
+      item.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  });
+</script>

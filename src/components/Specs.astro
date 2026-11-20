@@ -1,0 +1,121 @@
+---
+const specs = [
+  ['Facturación electrónica', 'Integrada con la DIAN a través de un proveedor tecnológico autorizado. Cada venta puede salir como factura electrónica con su CUFE y su QR.'],
+  ['Impresión', 'Tiquetes en impresoras térmicas de 58 y 80 mm conectadas por USB, con el logo y los datos de tu negocio.'],
+  ['Cajas y turnos', 'Varias cajas vendiendo al mismo tiempo. Apertura con base, cierre con arqueo y un historial de turnos que puedes reimprimir.'],
+  ['Medios de pago', 'Los que uses en tu negocio: efectivo, Nequi, Daviplata, tarjeta o transferencia. Los creas y los ordenas tú.'],
+  ['Usuarios y permisos', 'Roles por persona: el cajero vende, el administrador ve todo. Cada movimiento queda registrado con nombre.'],
+  ['Acceso', 'Desde el navegador del PC, la tablet o el celular. No hay nada que instalar ni servidores que mantener.'],
+  ['Seguridad', 'Contraseñas cifradas, datos aislados por negocio y cierre de sesión por inactividad, excepto mientras se factura en el POS.'],
+];
+
+const gear = [
+  {
+    name: 'Lector de código de barras',
+    note: 'USB, de mano o de mesa',
+    paths: [
+      'M18 30h50a9 9 0 0 1 9 9v4a9 9 0 0 1-9 9H48l-7 24H28l6-24H18a9 9 0 0 1-9-9v-4a9 9 0 0 1 9-9z',
+      'M77 36l30-10M77 41h32M77 46l30 10',
+    ],
+  },
+  {
+    name: 'Impresora térmica',
+    note: '58 u 80 mm, ESC/POS',
+    paths: [
+      'M24 42h72a7 7 0 0 1 7 7v22a7 7 0 0 1-7 7H24a7 7 0 0 1-7-7V49a7 7 0 0 1 7-7z',
+      'M36 42V16h48v26',
+      'M44 24h32M44 31h22',
+      'M30 60h22M86 60h4',
+    ],
+  },
+  {
+    name: 'Cajón monedero',
+    note: 'Abre al cobrar en efectivo',
+    paths: [
+      'M12 46h96v30H12z',
+      'M12 46l12-18h72l12 18',
+      'M50 61h20',
+    ],
+  },
+  {
+    name: 'PC, tablet o celular',
+    note: 'Cualquier navegador moderno',
+    paths: [
+      'M14 16h70a6 6 0 0 1 6 6v44a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6V22a6 6 0 0 1 6-6z',
+      'M96 34h14a4 4 0 0 1 4 4v38a4 4 0 0 1-4 4H96a4 4 0 0 1-4-4V38a4 4 0 0 1 4-4z',
+      'M100 74h6',
+    ],
+  },
+];
+---
+<section class="sec specs" id="ficha">
+  <div class="wrap">
+    <div class="specs-grid">
+      <div class="specs-intro">
+        <span class="eyebrow" data-reveal>Ficha técnica</span>
+        <h2 class="sec-title" data-split>Lo que trae, sin letra pequeña.</h2>
+        <p class="sec-lead" data-reveal style="--d:.2s">Lo que necesitas para operar una tienda en Colombia, sin módulos de relleno ni cobros por cada función.</p>
+      </div>
+      <dl class="specs-list">
+        {specs.map(([k, v], i) => (
+          <div class="spec" data-reveal style={`--d:${i * 0.05}s`}>
+            <dt class="mono">{String(i + 1).padStart(2, '0')}<span>{k}</span></dt>
+            <dd>{v}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <div class="gear">
+      <p class="gear-title" data-reveal>Funciona con lo que ya tienes en el mostrador</p>
+      <div class="gear-grid">
+        {gear.map((g, i) => (
+          <div class="gear-card" data-draw style={`--d:${i * 0.12}s`}>
+            <svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              {g.paths.map((d) => <path d={d} pathLength="1" />)}
+            </svg>
+            <b>{g.name}</b>
+            <span class="mono">{g.note}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .specs { background: linear-gradient(180deg, transparent, var(--bg-2) 30%, var(--bg-2) 70%, transparent); }
+  .specs-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .specs-intro { position: sticky; top: 120px; }
+  .specs-list { border-top: 1px solid var(--line); }
+  .spec { position: relative; display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+  .spec::before { content: ''; position: absolute; left: 0; bottom: -1px; width: 100%; height: 1px; background: var(--sky); transform: scaleX(0); transform-origin: left; transition: transform .7s var(--ease); }
+  .spec:hover::before { transform: scaleX(1); }
+  .spec dt { display: flex; gap: 14px; font-size: 12px; letter-spacing: .06em; color: var(--ink-3); }
+  .spec dt span { font: 600 16px/1.3 var(--f-body); letter-spacing: 0; color: var(--ink); }
+  .spec dd { color: var(--ink-2); font-size: 15px; }
+
+  .gear { margin-top: clamp(80px, 10vw, 130px); }
+  .gear-title { color: var(--ink-3); font: 500 12px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; }
+  .gear-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 24px; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--line); }
+  .gear-card { display: flex; flex-direction: column; gap: 6px; padding: 28px 26px 26px; background: var(--bg-2); transition: background .4s; }
+  .gear-card:hover { background: #0b1628; }
+  .gear-card svg { width: 120px; height: 90px; margin-bottom: 18px; color: var(--sky); }
+  .gear-card path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .js .gear-card.in path { transition: stroke-dashoffset 1.6s cubic-bezier(.6, .1, .2, 1) var(--d); stroke-dashoffset: 0; }
+  html:not(.js) .gear-card path { stroke-dashoffset: 0; }
+  .gear-card b { font-weight: 600; }
+  .gear-card .mono { font-size: 12px; color: var(--ink-3); }
+
+  @media (max-width: 960px) {
+    .specs-grid { grid-template-columns: 1fr; }
+    .specs-intro { position: static; }
+    .gear-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .spec { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; }
+    .gear-card { padding: 20px 16px; }
+    .gear-card svg { width: 96px; height: 72px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .gear-card path { stroke-dashoffset: 0 !important; } }
+</style>

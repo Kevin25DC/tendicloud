@@ -1,0 +1,82 @@
+---
+import { SITE, contactHref } from '../config';
+const year = new Date().getFullYear();
+---
+<footer class="ft">
+  <div class="wrap ft-top">
+    <div class="ft-brand">
+      <img src="/logo-dark.png" alt="TendiCloud, gestión integral para tenderos" width="884" height="181" />
+    </div>
+    <nav class="ft-cols" aria-label="Pie de página">
+      <div>
+        <h4>Producto</h4>
+        <a href="#producto">Cómo funciona</a>
+        <a href="#modulos">Módulos</a>
+        <a href="#ficha">Ficha técnica</a>
+        <a href="#precios">Precios</a>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <a href="#preguntas">Preguntas frecuentes</a>
+        <a href={contactHref}>Contacto</a>
+        <a href={SITE.loginUrl}>Entrar a mi cuenta</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#">Términos y condiciones</a>
+        <a href="#">Política de tratamiento de datos</a>
+      </div>
+    </nav>
+  </div>
+  <div class="ft-giant" aria-hidden="true" data-giant>TENDICLOUD</div>
+  <div class="wrap ft-bottom">
+    <span>© {year} TendiCloud. Todos los derechos reservados.</span>
+    <span class="mono">Hecho en Colombia</span>
+  </div>
+</footer>
+
+<style is:global>
+  .ft { border-top: 1px solid var(--line); padding-top: 72px; overflow: hidden; }
+  .ft-top { display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; }
+  .ft-brand img { width: auto; height: 58px; }
+  .ft-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .ft-cols div { display: flex; flex-direction: column; gap: 10px; }
+  .ft-cols h4 { margin-bottom: 6px; font: 500 11.5px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+  .ft-cols a { width: fit-content; font-size: 14px; color: var(--ink-2); transition: color .2s; }
+  .ft-cols a:hover { color: var(--ink); }
+  .ft-giant {
+    margin-top: 72px;
+    font: 900 13.4vw/.8 var(--f-display);
+    letter-spacing: -.05em;
+    text-align: center;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(140, 175, 225, .22);
+    background: linear-gradient(0deg, var(--blue) calc(var(--fp, 0) * 100%), transparent calc(var(--fp, 0) * 100%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    user-select: none;
+  }
+  .ft-bottom { display: flex; justify-content: space-between; gap: 16px; padding: 28px 0 32px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-3); }
+  @media (max-width: 860px) {
+    .ft-top { grid-template-columns: 1fr; }
+    .ft-cols { grid-template-columns: 1fr 1fr; }
+    .ft-bottom { flex-direction: column; }
+  }
+</style>
+
+<script>
+  const giant = document.querySelector<HTMLElement>('[data-giant]');
+  if (giant) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) giant.style.setProperty('--fp', '1');
+    else {
+      const update = () => {
+        const left = document.documentElement.scrollHeight - innerHeight - scrollY;
+        const p = Math.min(Math.max(1 - left / (innerHeight * 0.6), 0), 1);
+        giant.style.setProperty('--fp', p.toFixed(3));
+      };
+      addEventListener('scroll', update, { passive: true });
+      update();
+    }
+  }
+</script>
